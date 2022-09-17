@@ -569,6 +569,140 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 8.  Select **OK** at the bottom of the **Associate subnet** blade.
 
+## Exercise #07 - Configure VPN Gateway Site-to-Site (60 minutes)
+
+1.  In the Azure portal, select **+ Create a resource**, then in the **Search the Marketplace** box, search for and select **Virtual network**. Select **Create**.
+
+2.  On the **Create virtual network** blade, enter the following information:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: Select **Create new**, and enter the name **OnPremVNetRG**.
+
+    -  Name: **OnPremVNet**
+
+    -  Region: **(US) East US or available for you**.
+
+3.  Leave the other options with their default values.
+
+4.  Upon completion, it should look like the following screenshot. Validate the information is correct, and select **Next: IP Addresses**.
+
+5. On the **IP addresses** tab of the **Create virtual network blade**, enter the following information.
+
+    -  Address space: **192.168.0.0/16**
+
+    - Select **+ Add subnet** then enter the following information in the blade that appears on the right and select **Add**.
+
+      -  Subnet name: **default**
+
+      -  Subnet address range: **192.168.0.0/24**
+
+6. Select **Review + create** then **Create**.
+
+1.  Select the **OnPremVnetRG** Resource Group and then open the **OnPremVNet** blade and select **Subnets**.
+
+2.  Next, select **+ Gateway subnet**.
+
+3.  Specify the following configuration for the subnet, and select **Save**:
+
+    -  Subnet address range: **192.168.1.0/29**
+
+    -  Route table: **None** (We will add this later.)
+
+4.  Next, select **+ Subnet** and add the **OnPremManagementSubnet** subnet to the **OnPremVNet**, as shown below in the screenshot:
+
+    - Name: **OnPremManagementSubnet**
+  
+    - Address range: **192.168.2.0/29**
+  
+    - Leave the rest of the values as their defaults. 
+
+1.  Using the Azure Management portal, select **+ Create a resource**, type **Virtual Network gateway** in the **Search the Marketplace** text box, in the list of results, select **Virtual network gateway**, and then select **Create**.
+
+2.  On the **Create virtual network gateway** blade,  enter the following information and select **Review + create**:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Name: **OnPremWGGateway**
+
+    -  Region: This must match the location in which you created the **OnPremVNet** virtual network.
+
+    -  Gateway type: **VPN**
+
+    -  VPN type: **Route-based**
+
+    -  SKU: **VpnGw1**
+
+    -  Virtual network: **OnPremVNet**
+
+    -  Public IP address: **Create new**
+
+    -  Public IP address name: **onpremgatewayIP1**
+
+    -  Enable active-active mode: **Enabled**
+
+    -  Second Public IP address name: **onpremgatewayIP2**
+
+    -  Configure BGP: **Disabled**
+
+3.  Validate your settings and select **Review + Create** then **Create**.
+
+    >**Note:** The gateway will take 30-45 minutes to provision. Rather than waiting, continue to the next task.
+
+1.  Using the Azure Management portal, select **+ Create a resource**, type **Virtual Network gateway** in the **Search the Marketplace** text box, in the list of results, select **Virtual network gateway**, and then select **Create**.
+
+2.  On the **Create virtual network gateway** blade,  enter the following information and select **Review + create**:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Name: **WGVNet1Gateway**
+
+    -  Region: This must match the location in which you created the **WGVNet1** virtual network.
+
+    -  Gateway type: **VPN**
+
+    -  VPN type: **Route-based**
+
+    -  SKU: **VpnGw1**
+
+    -  Virtual network: **WGVNet1**
+
+    -  Resource group: **WGVNetRG1**
+
+    -  Public IP address: **Create new**
+
+    -  Public IP address name: **vnet1gatewayIP1**
+
+    -  Enable active-active mode: **Enabled**
+
+    -  Second Public IP address name: **vnet1gatewayIP2**
+
+    -  Configure BGP: **Disabled**
+
+3.  Validate your settings and select **Review + Create** then **Create**.
+
+    >**Note:** The gateway will take 30-45 minutes to provision. You will need to wait until both gateways are provisioned before proceeding to the next section.
+
+4.  The Azure portal will display a notification when the deployments have completed.
+
+1.  In the Azure portal, select **+ Create a resource**, in the **Search the Marketplace** text box, type in **Connection**, and press **Enter**.
+
+2.  On the **Connection** blade, select **Create**.
+
+3.  On the **Basics** blade, leave the **Connection type** set to **VNet-to-VNet**. Select the existing **WGVNetRG1** resource group. Enter the following information and select **Next: Settings**:
+    - Establish bidirectional connectivity - checked
+    - First connection name - **WGVNet1-to-OnPremWGGateway**
+    - Second connection name - **WGGateway-to-WGVNet1**
+    - Region - **East US US or available for you**
+
+4.  On the Settings step, select **WGVNet1Gateway** as the first virtual network gateway and **OnPremWGGateway** as the second virtual network gateway. Ensure **Establish bidirectional connectivity** and **IKEV2** is selected. Enter a shared key, such as **A1B2C3D4**. Select **Review + create**.
+
+5.  Select **Create** on the **Summary** page to create the connection.
+
+6.  In the Azure portal, select **All services** on the left navigation. Then, type **connections** in the search text box and select **Connections**.
+
+7.  Watch the progress of the connection status, and use the **Refresh** icon until the status changes for both connections from **Unknown** to **Connected**. This may take 5-10 minutes or more. You might need to refresh the page to see the change in status.
+
 ## Project - Deploy Hub-spoke Archicture (60 minutes)
 
 Implement a Hub-spoke topology
