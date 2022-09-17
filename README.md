@@ -406,7 +406,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 15. On the **WGAppNSG1 - Inbound security rules** blade, select **Subnets** under **Settings** and then select **+ Associate**.
 
-16. On the **Associate subnet** blade, select **WGVNet2** on the **Virtual network** drop down and **AppSubnet** on the **Subnet** dropdown.
+16. On the **Associate subnet** blade, select **WGVNet2** on the **Virtual network** drop down ***ataSubnet** and **AppSubnet** on the **Subnet** dropdown.
 
 17. Select **OK** at the bottom of the **Associate subnet** blade.
 
