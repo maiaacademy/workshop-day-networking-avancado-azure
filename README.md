@@ -494,13 +494,39 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Route name: **AppToMgmt**
 
-    -  Address prefix: **10.7.0.0/20**
+    -  Address prefix: **10.7.0.0/24**
 
     -  Next hop type: **Virtual appliance**
 
     -  Next hop address: **10.7.1.4**
 
-4.  Upon completion, your routes in the **AppRT** route table should look like the following screenshot:
+4.  Upon completion, your routes in the **AppRT**.
+
+1. In the Azure Portal, go to All Services and type Route in the search box and select **Route tables**.
+
+6.  Select **MgmtRT**, and select **Routes** under **Settings** on the left.
+
+7.  On the **Routes** blade, select **+Add**. Enter the following information, and select **OK**:
+
+    -  Route name: **MgmtToOnPremises**
+
+    -  Address prefix: **192.168.0.0/16**
+
+    -  Next hop type: **Virtual network gateway**
+
+    -  Next hop address: **Leave blank**.
+
+8.  Add the **MgmtToApp** route using the following information:
+
+    -  Route name: **MgmtToApp**
+
+    -  Address prefix: **10.7.2.0/25**
+
+    -  Next hop type: **Virtual appliance**
+
+    -  Next hop address: **10.7.1.4** (This is the private IP of Azure Firewall.)
+
+9.  Upon completion, your routes in the **MgmtRT**.
 
 5.    >**Note:** The route tables and routes you have just created are not associated with any subnets yet, so they are not impacting any traffic flow yet. This will be accomplished later in the lab.
 
