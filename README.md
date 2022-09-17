@@ -834,6 +834,9 @@ Implement a Hub-spoke topology
 - VNET Peering connection Hub and Spokes;
 - Gateway VPN on the Hub network and On-premises network;
 - Azure Bastion on the Hub network;
+- Azure Firewall allow all internal traffic.
+- Custom Route tables to address prefix "Address Space networking destination" and next hop type to virtual applicance;
+Network rule 
 - Azure Firewall on the Hub network;
 
 References: [Hub-spoke network topology](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke)
