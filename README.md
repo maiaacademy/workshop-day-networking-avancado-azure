@@ -461,7 +461,31 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 5.    >**Note:** The route tables and routes you have just created are not associated with any subnets yet, so they are not impacting any traffic flow yet. This will be accomplished later in the lab.
 
-## Exercise #06 - Deploy Azure Firewall (30 minutes)
+## Exercise #06 - Deploy Azure Bastion (15 minutes)
+
+1.  In the Azure portal, select **+ Create a resource** then select **Bastion**. In the search results, select the Bastion service with Microsoft as the publisher.
+
+2.  On the **Create a Bastion** blade, on the **Basics** tab, enter the following information, and select **Review + Create**:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: Select **WGVnetRG1**.
+
+    -  Name: **WGBastion**
+
+    -  Region: This must match the location in which you created the **WGVNet1** virtual network.
+
+    -  Virtual network: **WGVNet1**
+
+    -  Subnet: **AzureBastionSubnet** Note: Create a new subnet, assign (10.7.5.0/24) as the subnet address.
+
+    -  Public IP: **Create New**
+
+    -  Public IP address name: **BastionPublicIP**
+
+3.  On the **Create a Bastion** blade, on the **Review + Create** tab, ensure the validation passes, and select **Create**. The Bastion host will take about 5 minutes to provision.
+
+## Exercise #07 - Deploy Azure Firewall (30 minutes)
 
 1.  In the Azure portal, select **+ Create a resource**. In the **Search the Marketplace** text box, type **Firewall**, in the list of results, select **Firewall**, and on the **Firewall** blade, select **Create**.
 
@@ -571,7 +595,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 8.  Select **OK** at the bottom of the **Associate subnet** blade.
 
-## Exercise #07 - Configure VPN Gateway Site-to-Site (60 minutes)
+## Exercise #08 - Configure VPN Gateway Site-to-Site (60 minutes)
 
 1.  In the Azure portal, select **+ Create a resource**, then in the **Search the Marketplace** box, search for and select **Virtual network**. Select **Create**.
 
