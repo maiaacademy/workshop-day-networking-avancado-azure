@@ -438,7 +438,11 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 3.  On the **Create a Bastion** blade, on the **Review + Create** tab, ensure the validation passes, and select **Create**. The Bastion host will take about 15 minutes to provision.
 
-1. In the Azure portal, navigate to the **WGWEB1** VM and initiate a Bastion connection session to the WGWEB1 virtual machine by selecting Connect and Bastion.
+1. In the Azure portal, navigate to the **WGWEB1** VM and initiate a Bastion connection session to the WGWEB1 virtual machine by selecting Connect and Bastion, enter the following information:
+
+ - User name: demouser
+
+ - Password demo@pass123
 
 ## Exercise #06 - Configure Route Tables (15 minutes)
 
