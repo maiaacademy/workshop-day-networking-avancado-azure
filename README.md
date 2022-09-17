@@ -128,7 +128,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     | Setting | Value |
     | --- | --- |
-    | Link name | **VNL-Hub** |
+    | Link name | **VNL-WGVNet1** |
     | Subscription | the name of the Azure subscription you are using in this lab |
     | Virtual network | **WGVNet1** |
     | Enable auto registration | enabled |
@@ -153,7 +153,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 1. Verify that the output of the command includes the private IP address of **WGVM1**.
 
-## Exercise #02.1 - Deploy Virtual Networks for Spoke (10 minutes)
+## Exercise #02.1 - Deploy Virtual Networks and Application for Spoke (10 minutes)
 
 1. In the Azure portal, search for and select **Virtual networks**, and, on the **Virtual networks** blade, click **+ Add**.
 
@@ -186,7 +186,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
     | Route table | **None** |
     | | |
 
-## Exercise #02.1 - Deploy Woodgrove Application for Spoke (30 minutes)
+## Exercise #02.2 - Deploy Woodgrove Application for Spoke (30 minutes)
 
 1. Deploy the template **woodgrove.json** to a new resource group. This template deploys a two virtual machines running application and database.
 
@@ -194,108 +194,29 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmaiaacademy%2Fworkshop-day-networking-avancado-azure%2Fmain%2FAllFiles%2Fwoodgrove.json" target="_blank">![Button to deploy the Woodgrove template to Azure.](/AllFiles/Images/deploy-to-azure.png)</a>
 
-    > **Note:** The template will take around 15 minutes to deploy. Once template deployment is complete, several additional scripts are executed to bootstrap the lab environment. **Allow at least 30 minutes from the start of template deployment for the scripts to run.**
+    > **Note:** The template will take around 30 minutes to deploy. Once template deployment is complete, several additional scripts are executed to bootstrap the lab environment. **Allow at least 45 minutes from the start of template deployment for the scripts to run.**
 
+1. Within the computer, start Browser and navigate to **IP Public address** of the **WGWEB1**.
 
-## Exercise #02 - Network Security groups (15 minutes)
-
-1. In the Azure portal, search for and select **Network security groups**, and, on the **Network security groups** blade, click **+ Add**.
-
-1. Create a network security group with the following settings (leave others with their default values):
-
-    | Setting | Value |
-    | --- | --- |
-    | Subscription | the name of the Azure subscription you are using in this lab |
-    | Resource Group | **WGVNetRG1** |
-    | Name | **NSG-WEB** |
-    | Region | the name of the Azure region where you deployed all other resources in this lab |
-
-1. On the deployment blade, click **Go to resource** to open the **NSG-WEB** network security group blade. 
-
-1. On the **NSG-WEB** network security group blade, in the **Settings** section, click **Inbound security rules**. 
-
-1. Add an inbound rule with the following settings (leave others with their default values):
-
-    | Setting | Value |
-    | --- | --- |
-    | Source | **Any** |
-    | Source port ranges | * |
-    | Destination | **Any** |
-    | Destination port ranges | **22,80** |
-    | Protocol | **TCP** |
-    | Action | **Allow** |
-    | Priority | **200** |
-    | Name | **Allow-Port_22-80** |
-
-1. On the **NSG-WEB** network security group blade, in the **Settings** section, click **Network interfaces** and then click **+ Associate**.
-
-1. Associate the **WGVM1** network security group with the **Network interface**.
-
-    >**Note**: It may take up to 5 minutes for the rules from the newly created Network Security Group to be applied to the Network Interface Card.
-
-1. Go to the Azure portal to view your **Network security groups**. Search for and select Network security groups.
-
-1. Select the name of your Network security group.
-
-**Note:** If necessary desatch associated Network security groups.
-
-1. In the menu bar of the network security group, under Settings, you can view the Inbound security rules, Outbound security rules, Network interfaces, and Subnets that the network security group is associated to.
-
-1. Under **Support + troubleshooting**, you can view Effective security rules.
-
-1. In the Desktop, start Windows PowerShell and, in the **Administrator: Windows PowerShell** window run the following to set connection test. 
-
-   ```powershell
-   Test-NetConnection -ComputerName VMPUBLICIPADDRESS -Port 80 -InformationLevel 'Detailed'
-   ```
-1. Examine the output of the command and verify that the connection was successful.
-
-1. Within the computer, start Browser and navigate to **VMPUBLICIPADDPRESS**.
-
-1. Examine the navegate was successful.
+1. Examine the navegate on Application was successful.
 
 ## Exercise #03 - Configure Azure VNET Peering (30 minutes)
 
-1. In the Azure portal, search for and select **Virtual networks**, and, on the **Virtual networks** blade, click **+ Add**.
-
-1. Create a virtual network with the following settings (leave others with their default values):
-
-    | Setting | Value |
-    | --- | --- |
-    | Subscription | the name of the Azure subscription you will be using in this lab |
-    | Resource Group | the name of a resource group **RG-Network-Spoke1** |
-    | Name | **VNET-Spoke1** |
-    | Region | West US 2 |
-    | IPv4 address space | **172.16.0.0/16** |
-    | Subnet name | **Default** |
-    | Subnet address range | **172.16.1.0/24** |
-     | | |
-      
-1. Accept the defaults and click **Review and Create**. Let validation occur, and hit **Create** again to submit your deployment.
-
-1. Once the deployment completes browse for **Virtual Networks** in the portal search bar. Within **Virtual networks** blade, click on the newly created virtual network.
-
-1. In the Azure portal, search for and select **Virtual machines**
-
-1. On the **Virtual machines**, click **Add** and create a new Ubuntu Server Virtual machine, on the **VMSpoke1**.
-
-1. On the **Private DNS Zones**, click **Add** and create a new **Virtual networking links**, on the **VNET-Spoke1**.
-
 1. In the Azure portal, search for and select **Virtual networks**.
 
-1. In the list of virtual networks, click **VNET-Spoke1**.
+1. In the list of virtual networks, click **WGVNet1**.
 
-1. On the **VNET-Spoke1** virtual network blade, in the **Settings** section, click **Peerings** and then click **+ Add**.
+1. On the **WGVNet2** virtual network blade, in the **Settings** section, click **Peerings** and then click **+ Add**.
 
 1. Specify the following settings (leave others with their default values) and click **Add**:
 
     | Setting | Value|
     | --- | --- |
-    | This virtual network: Peering link name | **To-Hub** |
+    | This virtual network: Peering link name | **To-WGVNet1** |
     | This virtual network: Traffic to remote virtual network | **Allow (default)** |
     | This virtual network: Traffic forwarded from remote virtual network | **Allow (default)** |
     | Virtual network gateway | **None** |
-    | Remote virtual network: Peering link name | **To-Spoke1** |    
+    | Remote virtual network: Peering link name | **To-WGVNet2** |    
     | Virtual network deployment model | **Resource manager** |
     | I know my resource ID | unselected |
     | Subscription | the name of the Azure subscription you are using in this lab |
@@ -304,26 +225,9 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
     | Traffic forwarded from remote virtual network | **Allow (default)** |
     | Virtual network gateway | **None** |
 
-1. On the **WGVNet1** virtual network blade, in the **Settings** section, click **Peerings** and then click **+ Add**.
+1. On the **Private DNS Zones**, click **Add** and create a new **Virtual networking links**, on the **WGVNet2**.
 
-1. Add a peering with the following settings (leave others with their default values):
-
-    | Setting | Value|
-    | --- | --- |
-    | This virtual network: Peering link name | **To-Spoke1** |
-    | This virtual network: Traffic to remote virtual network | **Allow (default)** |
-    | This virtual network: Traffic forwarded from remote virtual network | ****Allow (default)**** |
-    | Virtual network gateway | **None** |
-    | Remote virtual network: Peering link name | **To-Hub** |    
-    | Virtual network deployment model | **Resource manager** |
-    | I know my resource ID | unselected |
-    | Subscription | the name of the Azure subscription you are using in this lab |
-    | Virtual network | **WGVNet1** |
-    | Traffic to remote virtual network | **Allow (default)** |
-    | Traffic forwarded from remote virtual network | **Allow (default)** |
-    | Virtual network gateway | **None** |
-
-1. At the top of the Azure portal, enter the name of a **VMSpoke1** that is in the running state, in the search box. When the name of the VM appears in the search results, select it.
+1. At the top of the Azure portal, enter the name of a **WGVM1** that is in the running state, in the search box. When the name of the VM appears in the search results, select it.
 
 1. Under Settings on the left, select **Networking**, and navigate to the network interface resource by selecting its name. View network interfaces.
 
@@ -331,21 +235,338 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
     
 1. Connect Spoke1 Virtual Machine, in the session SSH.
 
-1. In the terminal session, run the following to test connectivity to **VNET-Spoke1**.
+1. In the terminal session, run the following to test connectivity to **WGWEB1**.
 
    ```shell
-   telnet VMHUBIPADDRESS 22
+   telnet WGWEB1.woodgrove.corp 80
    ```
-    >**Note**: The test uses TCP 22 since this is this port is allowed by default by operating system firewall. 
+    >**Note**: The test uses TCP 80 since this is this port is allowed by default by operating system firewall. 
 
 1. Examine the output of the command and verify that the connection was successful.
 
-1. Switch in Hub Virtual machine, run the following to test connectivity to **WGVM1** 
+## Exercise #04 - Network Security groups (30 minutes)
 
-   ```shell
-   telnet VMSPOKE1IPADDRESS 22
-   ```
-1. Examine the output of the command and verify that the connection was successful.
+1.  In the Azure portal, select **+ Create a resource**. In the **Search the Marketplace** box, search for and select **Application security group**. Next, on the **Application security group** blade, select **Create**.
+
+2.  On the **Create an application security group** blade, on the **Basics** tab, enter the following information, and select **Review + create**:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: **WGVNetRG2**
+
+    -  Name: **WebTier**
+
+    -  Region: This must match the location in which you created the **WGVNet2** virtual network.
+
+3.  On the **Create an application security group** blade, on the **Review + Create** tab, ensure the validation passes, and select **Create**. 
+
+4.  Repeat the previous two steps to create an application security group named **DataTier** with the following settings.
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: **WGVNetRG2**
+
+    -  Name: **DataTier**
+
+    -  Region: This must match the location in which you created the **WGVNet2** virtual network.
+
+1.  In the Azure portal, navigate to the **Virtual machines** blade and select **WGWEB1**.
+
+2.  On the **WGWEB1** blade, select **Networking** under **Settings** on the left.
+
+3.  On the **WGWEB1 - Networking** blade, select **Application security groups** and then select **Configure the application security groups**.
+
+4.  On the **Configure the application security groups** blade, in the **Application security groups** drop-down list, select **WebTier**, then **Save**.
+
+6.  Repeat steps, but this time for **WGSQL1** in order to assign to its network interface the **DataTier** application security group.
+
+1.  In the Azure portal, select **+ Create a resource**. In the **Search the Marketplace** box, **Network security group** and press Enter. Select it and on the **Network security group** blade, select **Create**.
+
+2.  On the **Create network security group** blade, enter the following information, and select **Review + Create** then **Create**:
+   
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: **WGVNetRG2**
+
+    -  Name: **WGAppNSG1**
+
+    -  Region: This must match the location in which you created the **WGVNet2** virtual network.
+
+3.  In the Azure Portal, navigate to **All Services**, type **Network security groups** the search box and select **Network security groups**.
+
+4.  On the **Network security groups** blade, select **WGAppNSG1**. 
+
+5.  On the **WGAppNSG1** blade, select **Inbound security rules** under **Settings** on the left and select **Add**.
+
+6.  On the **Add inbound security rule** blade, enter the following information, and select **Add**:
+
+    -  Source: **Application security group**
+
+    -  Source application security group: **WebTier**
+
+    -  Source port ranges: **\***
+
+    -  Destination: **Application security group**
+
+    -  Destination application security group: **DataTier**
+
+    -  Destination port ranges: **1433**
+
+    -  Protocol: **TCP**
+
+    -  Action: **Allow**
+
+    -  Priority: **100**
+
+    -  Name: **AllowDataTierInboundTCP1433**
+
+7.  On the **WGAppNSG1 - Inbound security rules** blade, select **Add**.
+
+8.  On the **Add inbound security rule** blade, enter the following information, and select **Add**:
+
+    -  Source: **Any**
+
+    -  Source port ranges: **\***
+
+    -  Destination: **Application security group**
+
+    -  Destination application security group: **WebTier**
+
+    -  Destination port ranges: **80**
+
+    -  Protocol: **TCP**
+
+    -  Action: **Allow**
+
+    -  Priority: **150**
+
+    -  Name: **AllowAnyWebTierInboundTCP80**
+
+9.  On the **WGAppNSG1 - Inbound security rules** blade, select **Add**.
+
+11. On the **WGAppNSG1 - Inbound security rules** blade, select **Add**.
+
+12. On the **Add inbound security rule** blade, enter the following information, and select **Add**:
+
+    -  Source: **Service Tag**
+
+    -  Source service tag: **VirtualNetwork**
+
+    -  Source port ranges: **\***
+
+    -  Destination: **Application security group**
+
+    -  Destination application security group: **DataTier**
+
+    -  Destination port ranges: **\***
+
+    -  Protocol: **Any**
+
+    -  Action: **Deny**
+
+    -  Priority: **1000**
+
+    -  Name: **DenyVNetDataTierInbound**
+
+13. On the **WGAppNSG1 - Inbound security rules** blade, select **Add**.
+
+14. On the **Add inbound security rule** blade, enter the following information, and select **Add**:
+
+    -  Source: **Service Tag**
+
+    -  Source service tag: **VirtualNetwork**
+
+    -  Source port ranges: **\***
+
+    -  Destination: **Application security group**
+
+    -  Destination application security group: **WebTier**
+
+    -  Destination port ranges: **\***
+
+    -  Protocol: **Any**
+
+    -  Action: **Deny**
+
+    -  Priority: **1050**
+
+    -  Name: **DenyVNetWebTierInbound**
+
+15. On the **WGAppNSG1 - Inbound security rules** blade, select **Subnets** under **Settings** and then select **+ Associate**.
+
+16. On the **Associate subnet** blade, select **WGVNet2** on the **Virtual network** drop down and **AppSubnet** on the **Subnet** dropdown.
+
+17. Select **OK** at the bottom of the **Associate subnet** blade.
+
+1. Within the computer, start Browser and navigate to **IP Public address** of the **WGWEB1**.
+
+1. Examine the navegate on Application was successful.
+
+## Exercise #05 - Configure Route Tables (15 minutes)
+
+1.  On the main portal menu, select **+ Create a Resource**. Type **route** into the search box, and select **Route table** then select **Create**.
+
+2.  On the **Create a Route table** blade enter the following information:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: Select **WGVNetRG1** from the drop down.
+
+    -  Region: This must match the location in which you created the **WGVNet1** virtual network.
+
+    -  Name: **MgmtRT**
+
+    -  Propagate gateway routes: **Yes**
+
+3.  When the dialog looks like the following screenshot, select **Review + Create** then **Create**.
+
+4.  Repeat steps 1 and 2 to create the **AppRT** route table:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: Select **WGVNetRG2** from the drop down.
+
+    -  Region: This must match the location in which you created the **WGVNet2** virtual network.
+
+    -  Name: **AppRT**
+
+    -  Propagate gateway routes: **Yes**
+
+5.  Once route tables are created, your **Route tables** blade should look like the following screenshot:
+
+1.  Select the **AppRT** route table, and select **Routes** under **Settings** on the left.
+
+2.  On the **Routes** blade, select **+ Add**. Enter the following information, and select **OK**:
+
+    -  Route name: **AppToInternet**
+
+    -  Address prefix: **0.0.0.0/0**
+
+    -  Next hop type: **Virtual appliance**
+
+    -  Next hop address: **10.7.1.4**
+
+3.  Repeat this procedure to add the **AppToMgmt** route using the following information:
+
+    -  Route name: **AppToMgmt**
+
+    -  Address prefix: **10.7.0.8/29**
+
+    -  Next hop type: **Virtual appliance**
+
+    -  Next hop address: **10.7.1.4**
+
+4.  Upon completion, your routes in the **AppRT** route table should look like the following screenshot:
+
+5.    >**Note:** The route tables and routes you have just created are not associated with any subnets yet, so they are not impacting any traffic flow yet. This will be accomplished later in the lab.
+
+## Exercise #06 - Deploy Azure Firewall (30 minutes)
+
+1.  In the Azure portal, select **+ Create a resource**. In the **Search the Marketplace** text box, type **Firewall**, in the list of results, select **Firewall**, and on the **Firewall** blade, select **Create**.
+
+2.  On the **Create a firewall** blade, on the **Basics** tab, enter the following information: 
+
+    -  Subscription: select your subscription.
+
+    -  Resource group: **WGVNetRG1**
+
+    -  Name: **azureFirewall**
+
+    -  Region: This must match the location in which you created the **WGVNet1** virtual network.
+
+    -  Availability zone: **None**
+
+    -  Firewall tier: **Standard**
+
+    - Firewall management: **Use Firewall rules (classic) to manage this Firewall**
+
+    -  Choose a Virtual network: **Use existing**
+
+    - Virtual network: **WGVNet1**
+
+    -  Public IP address: **(Add new) azureFirewall-ip**
+
+3.  Select **Review + create** and then select **Create** to provision the Azure Firewall. 
+
+1. Within 5-15 minutes, the resource group **WGVNetRG1** will have the firewall created. Next, we will firewall rules to allow the inbound and outbound traffic.
+
+1.  On the main Azure menu select **Resource groups**.
+
+2.  Select the **WGVNetRG1** resource group. This resource group contains the azure firewall and its public IP address resources.
+
+3.  Navigate to the **azureFirewall-ip** blade and note the value of its public IP address. You will need it later in this task.
+
+4.  Navigate to the **azureFirewall** blade, and, on the **Overview** page, select **Rules (classic)** under **Settings** on the left.
+
+5.  Select **+ Add NAT Rule collection** and enter the following information to create an inbound NAT Rule (collection is a list of rules that share the same priority and action) then select **Add**:
+
+    -  Name: **NATRuleCollection1**
+
+    -  Priority: **250**
+
+    -  Rules name: **IncomingHTTP**
+
+    -  Protocol: **TCP**
+
+    -  Source: **\***
+
+    -  Destination Address: Type the public IP address assigned to the firewall you identified earlier in this task.
+
+    -  Destination ports: **80** (to allow HTTP traffic)
+
+    -  Translated Address: **10.8.0.4** (Private IP of the WSWEB1 you deployed earlier in this lab.)
+        
+    -  Translated Port: **80**
+
+7.  Select **Save** and wait until the update completes.
+
+8.  Back on the Azure Firewall **Rules** page, select **Network rule collection**. Then Select **+ Add Network Rule collection** and enter the following information to create a Network Rule for inbound traffic. This rule allows HTTP connectivity from any directly connected network targeting the frontend IP address of the load balancer.
+
+    -  Name: **NetworkRuleCollectionAllow1**
+
+    -  Priority: **100**
+
+    -  Action: **Allow**
+
+    -  Rules name (IP Addresses): **IncomingWeb**
+
+    -  Protocol: **TCP**
+
+    -  Source: **\***
+
+    -  Destination Address: **10.8.0.4**
+
+    -  Destination ports: **80**
+
+9.  Crate another rule for Remote Desktop sessions from the Management subnet on WGVNet1.
+
+    -  Rules name (IP Addresses): **IncomingMgmtRDP**
+
+    -  Protocol: **TCP**
+
+    -  Source: **10.7.2.0/25**
+
+    -  Destination Address: **10.8.0.0/25**
+
+    -  Destination ports: **3389**
+
+10. Select **Add** and wait until the update completes.
+
+1.  In the Azure portal, navigate to the blade of the **WGVNetRG2** resource group.
+
+2.  Select **AppRT**, followed by **Subnets** and then select **+ Associate**.
+
+3.  On the **Associate subnet** blade, select **WGVNet2** on the **Virtual network** drop down. Select **AppSubnet** on the **Subnet** dropdown. 
+
+4.  Select **OK** at the bottom of the **Associate subnet** blade.
+
+5.  Navigate to the blade of the **WGVNetRG1** resource group, and select **MgmtRT**, then **Subnets**.
+
+6.  Select **+ Associate**.
+
+7.  On the **Associate subnet** blade, select **WGVNet1** on the **Virtual network** drop down. Select **Management** on the **Subnet** dropdown. 
+
+8.  Select **OK** at the bottom of the **Associate subnet** blade.
 
 ## Project - Deploy Hub-spoke Archicture (60 minutes)
 
@@ -355,15 +576,19 @@ Implement a Hub-spoke topology
 
 **Important Notes**
 - Three Virtual Networks;
-- Gateway VPN on the Hub network;
-- VNET Peering connection Hub to spoke and vice verse;
-- OPTIONAL: Azure Bastion on the Hub network;
+- VNET Peering connection Hub and Spokes;
+- Azure Bastion on the Hub network;
+- Gateway VPN on the Hub network and On-premises network;
 - Azure Firewall on the Hub network;
 - Custom Route tables to address prefix "Address Space networking destination" and next hop type to virtual applicance;
 - Network rule Azure Firewall all internal traffic.
 
 References: [Hub-spoke network topology](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke)
 
-1. End of day and **Workshop Day #02**.
+## After the Hands-on lab 
+
+1. Delete all Azure resources created in support of this Hands-on lab.
+
+1. End of **Workshop Day**
 
 1. Continue in the **Mentoria Arquiteto Cloud**.
