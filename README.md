@@ -412,7 +412,35 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 1. Examine the navegate on Application was successful.
 
-## Exercise #05 - Configure Route Tables (15 minutes)
+## Exercise #05 - Deploy Azure Bastion (15 minutes)
+
+1.  In the Azure portal, select **+ Create a resource** then select **Bastion**. In the search results, select the Bastion service with Microsoft as the publisher.
+
+2.  On the **Create a Bastion** blade, on the **Basics** tab, enter the following information, and select **Review + Create**:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: Select **WGVnetRG1**.
+
+    -  Name: **AzureBastion**
+
+    -  Region: This must match the location in which you created the **WGVNet1** virtual network.
+
+    - Tier: Basic
+
+    -  Virtual network: **WGVNet1**
+
+    -  Subnet: **AzureBastionSubnet** Note: After creation, assign (10.7.5.0/24) as the subnet address..
+
+    -  Public IP: **Create New**
+
+    -  Public IP address name: **BastionPublicIP**
+
+3.  On the **Create a Bastion** blade, on the **Review + Create** tab, ensure the validation passes, and select **Create**. The Bastion host will take about 15 minutes to provision.
+
+1. In the Azure portal, navigate to the **WGWEB1** VM and initiate a Bastion connection session to the WGWEB1 virtual machine by selecting Connect and Bastion.
+
+## Exercise #06 - Configure Route Tables (15 minutes)
 
 1.  On the main portal menu, select **+ Create a Resource**. Type **route** into the search box, and select **Route table** then select **Create**.
 
@@ -470,30 +498,6 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 5.    >**Note:** The route tables and routes you have just created are not associated with any subnets yet, so they are not impacting any traffic flow yet. This will be accomplished later in the lab.
 
-## Exercise #06 - Deploy Azure Bastion (15 minutes)
-
-1.  In the Azure portal, select **+ Create a resource** then select **Bastion**. In the search results, select the Bastion service with Microsoft as the publisher.
-
-2.  On the **Create a Bastion** blade, on the **Basics** tab, enter the following information, and select **Review + Create**:
-
-    -  Subscription: **Select your subscription**.
-
-    -  Resource group: Select **WGVnetRG1**.
-
-    -  Name: **WGBastion**
-
-    -  Region: This must match the location in which you created the **WGVNet1** virtual network.
-
-    -  Virtual network: **WGVNet1**
-
-    -  Subnet: **AzureBastionSubnet** Note: After creation, assign (10.7.5.0/24) as the subnet address..
-
-    -  Public IP: **Create New**
-
-    -  Public IP address name: **BastionPublicIP**
-
-3.  On the **Create a Bastion** blade, on the **Review + Create** tab, ensure the validation passes, and select **Create**. The Bastion host will take about 5 minutes to provision.
-
 ## Exercise #07 - Deploy Azure Firewall (30 minutes)
 
 1.  In the Azure portal, select **+ Create a resource**. In the **Search the Marketplace** text box, type **Firewall**, in the list of results, select **Firewall**, and on the **Firewall** blade, select **Create**.
@@ -504,7 +508,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Resource group: **WGVNetRG1**
 
-    -  Name: **azureFirewall**
+    -  Name: **AzureFirewall**
 
     -  Region: This must match the location in which you created the **WGVNet1** virtual network.
 
@@ -514,13 +518,13 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     - Firewall management: **Use a Firewall Policy to manage this firewall**
 
-    - Firewall policy: Click **Add new** and Policy name **azureFirewall**
+    - Firewall policy: Click **Add new** and Policy name **AzureFirewall**
 
     -  Choose a Virtual network: **Use existing**
 
     -  Virtual network: **WGVNet1**
 
-    -  Public IP address: **(Add new) azureFirewall-ip**
+    -  Public IP address: **(Add new) AzureFirewall-ip**
 
 3.  Select **Review + create** and then select **Create** to provision the Azure Firewall. 
 
@@ -737,6 +741,56 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 6.  In the Azure portal, select **All services** on the left navigation. Then, type **connections** in the search text box and select **Connections**.
 
 7.  Watch the progress of the connection status, and use the **Refresh** icon until the status changes for both connections from **Unknown** to **Connected**. This may take 5-10 minutes or more. You might need to refresh the page to see the change in status.
+
+1. Create a new Virtual Machine for On-premises.
+
+1.  On the Azure portal select **All services** at the left navigation. Enter **Route** in the search box, and select **Route tables**.
+
+2.  On the **Route tables** blade, select **+ Add**.
+
+3.  On the **Create route table** blade, enter the following information:
+
+    -  Subscription: **Select your subscription**.
+
+    -  Resource group: Select the drop-down menu, and select **WGVNetRG1**.
+
+    -  Region: This must match the location in which you created the **WGVNet1** virtual network.
+
+    -  Name: **WGAzureVNetGWRT**
+
+    -  Propagate gateway routes: **Yes**
+
+4.  Select **Review + create** then **Create**.
+
+5.  Select the **WGAzureVNetGWRT** route table.
+
+6.  Select **Routes** under **Settings** on the left.
+
+7.  On the **Routes** blade, select the **+ Add** button. Enter the following information, and select **OK**:
+
+    -  Route name: **OnPremToAppSubnet**
+
+    -  Address prefix: **10.8.0.0/25**
+
+    -  Next hop type: **Virtual appliance**
+
+    -  Next hop address: **10.7.1.4**
+
+8.  On the **WGAzureVNetGWRT - Routes** blade, select **Subnets** under **Settings** on the left.
+
+9.  On the **Subnets** blade, select **+ Associate**.
+
+10. On the **Associate subnet** blade, select **WGVNet1** under the **Virtual Network** drop down and select **GatewaySubnet** under the **Subnet** drop down.
+
+    >**Note:** At this point, you have configured your enterprise network. You should be able to test your Enterprise Class Network from one region to another. Your testing can include the following scenarios:
+
+    -  On the 'on-premises' virtual machine (OnPremVM), attempt to initiate a Remote Desktop session to any virtual machine on the AppSubnet (10.8.0.0/25). Note that this should fail since it is blocked by Azure Firewall.
+
+    -  In the Azure portal, navigate to the WGWEB1 VM and initiate a Bastion connection session to the WGWEB1 virtual machine by selecting **Connect** and **Bastion**. This should be successful since it is allowed by Azure Firewall and Azure Bastion Host. 
+
+    -  In the Azure portal, navigate to the WGWEB1 VM and initiate a Bastion connection session to the WGWEB2 virtual machine by selecting **Connect** and **Bastion**. This should be successful since it is allowed by Azure Firewall and Azure Bastion Host. 
+
+    -  From within the WGWEB1 VM Bastion connection session, initiate a Remote Desktop session to the WGSQL1 via its private IP address (10.8.1.4). This should be successful since it is allowed by Azure Firewall.
 
 ## Project - Deploy Hub-spoke Archicture (60 minutes)
 
