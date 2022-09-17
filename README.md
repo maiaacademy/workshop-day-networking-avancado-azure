@@ -190,7 +190,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 1. Deploy the template **woodgrove.json** to a new resource group. This template deploys a two virtual machines running application and database.
 
-    > **Note:** You can deploy the template by selecting the 'Deploy to Azure' button below. You will need to create a new resource group **WGVNetRG2***. You will also need to select a location **East US or location you hava quotas for VMs**. Then choose **Review + create** followed by **Create**. 
+    > **Note:** You can deploy the template by selecting the 'Deploy to Azure' button below. You will need to create a new resource group **WGVNetRG2**. You will also need to select a location **East US or location you hava quotas for VMs**. Then choose **Review + create** followed by **Create**. 
 
     <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmaiaacademy%2Fworkshop-day-networking-avancado-azure%2Fmain%2FAllFiles%2Fwoodgrove.json" target="_blank">![Button to deploy the Woodgrove template to Azure.](/AllFiles/Images/deploy-to-azure.png)</a>
 
@@ -200,7 +200,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 1. Examine the navegate on Application was successful.
 
-## Exercise #03 - Configure Azure VNET Peering (30 minutes)
+## Exercise #03 - Configure Azure VNET Peering (15 minutes)
 
 1. In the Azure portal, search for and select **Virtual networks**.
 
@@ -212,11 +212,11 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     | Setting | Value|
     | --- | --- |
-    | This virtual network: Peering link name | **To-WGVNet1** |
+    | This virtual network: Peering link name | **WGVNet2-to-WGVNet1** |
     | This virtual network: Traffic to remote virtual network | **Allow (default)** |
     | This virtual network: Traffic forwarded from remote virtual network | **Allow (default)** |
     | Virtual network gateway | **None** |
-    | Remote virtual network: Peering link name | **To-WGVNet2** |    
+    | Remote virtual network: Peering link name | **WGVNet1-to-WGVNet2** |    
     | Virtual network deployment model | **Resource manager** |
     | I know my resource ID | unselected |
     | Subscription | the name of the Azure subscription you are using in this lab |
@@ -225,7 +225,9 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
     | Traffic forwarded from remote virtual network | **Allow (default)** |
     | Virtual network gateway | **None** |
 
-1. On the **Private DNS Zones**, click **Add** and create a new **Virtual networking links**, on the **WGVNet2**.
+1. In the Azure portal, search for **Private DNS Zones**and select **woodgrove.corp**
+
+1. Click **Add** and create a new **Virtual networking links**, on the **WGVNet2**.
 
 1. At the top of the Azure portal, enter the name of a **WGVM1** that is in the running state, in the search box. When the name of the VM appears in the search results, select it.
 
