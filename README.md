@@ -356,8 +356,6 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 9.  On the **WGAppNSG1 - Inbound security rules** blade, select **Add**.
 
-11. On the **WGAppNSG1 - Inbound security rules** blade, select **Add**.
-
 12. On the **Add inbound security rule** blade, enter the following information, and select **Add**:
 
     -  Source: **Service Tag**
