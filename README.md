@@ -520,7 +520,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Route name: **MgmtToApp**
 
-    -  Address prefix: **10.7.2.0/25**
+    -  Address prefix: **10.7.0.0/24**
 
     -  Next hop type: **Virtual appliance**
 
