@@ -86,10 +86,9 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     | Setting | Value | 
     | --- | --- |
-    | Boot diagnostics | **Enable with custom storage account** |
-    | Diagnostics storage account | create new |
-    | Properties storage account | Name: **sadiag####**, Account kind: StorageV2, Performance: Standard, Replication: Locally-redundant-storage (LRS) |
-    | Enable auto-shutdown | off |   
+    | Boot diagnostics | **Enable with managed storage account (recommended)
+** |
+   | Enable auto-shutdown | off |   
     
 1. On the **Review + Create** blade, click **Create**.
 
