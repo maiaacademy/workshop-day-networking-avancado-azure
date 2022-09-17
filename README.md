@@ -479,11 +479,13 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Firewall tier: **Standard**
 
-    - Firewall management: **Use Firewall rules (classic) to manage this Firewall**
+    - Firewall management: **Use a Firewall Policy to manage this firewall**
+
+    - Firewall policy: Click **Add new** and Policy name **azureFirewall**
 
     -  Choose a Virtual network: **Use existing**
 
-    - Virtual network: **WGVNet1**
+    -  Virtual network: **WGVNet1**
 
     -  Public IP address: **(Add new) azureFirewall-ip**
 
@@ -497,7 +499,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 3.  Navigate to the **azureFirewall-ip** blade and note the value of its public IP address. You will need it later in this task.
 
-4.  Navigate to the **azureFirewall** blade, and, on the **Overview** page, select **Rules (classic)** under **Settings** on the left.
+4.  Navigate to the **azureFirewall** blade, and, on the **Overview** page, select **Rules** under **Settings** on the left.
 
 5.  Select **+ Add NAT Rule collection** and enter the following information to create an inbound NAT Rule (collection is a list of rules that share the same priority and action) then select **Add**:
 
@@ -712,8 +714,8 @@ Implement a Hub-spoke topology
 **Important Notes**
 - Three Virtual Networks;
 - VNET Peering connection Hub and Spokes;
-- Azure Bastion on the Hub network;
 - Gateway VPN on the Hub network and On-premises network;
+- Azure Bastion on the Hub network;
 - Azure Firewall on the Hub network;
 - Custom Route tables to address prefix "Address Space networking destination" and next hop type to virtual applicance;
 - Network rule Azure Firewall all internal traffic.
