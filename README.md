@@ -38,6 +38,17 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
     | Route table | **None** |
     | | |
 
+1. Repeat create a subnet with the following settings (leave others with their default values):
+
+    | Setting | Value |
+    | --- | --- |
+    | Name | **AzureBastionSubnet** |
+    | Address range (CIDR block) | **10.7.5.0/24** |
+    | Network security group | **None** |
+    | Route table | **None** |
+    | | |
+
+
 1. Explore properties to Virtual networks.
 
 ## Exercise #01.2 - Deploy Virtual Machine for Hub (10 minutes)
@@ -477,7 +488,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Virtual network: **WGVNet1**
 
-    -  Subnet: **AzureBastionSubnet** Note: Create a new subnet, assign (10.7.5.0/24) as the subnet address.
+    -  Subnet: **AzureBastionSubnet** Note: After creation, assign (10.7.5.0/24) as the subnet address..
 
     -  Public IP: **Create New**
 
