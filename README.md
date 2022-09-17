@@ -676,7 +676,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 3.  Specify the following configuration for the subnet, and select **Save**:
 
-    -  Subnet address range: **192.168.1.0/29**
+    -  Subnet address range: **192.168.1.0/27**
 
     -  Route table: **None** (We will add this later.)
 
@@ -708,17 +708,17 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Public IP address: **Create new**
 
-    -  Public IP address name: **onpremgatewayIP1**
+    -  Public IP address name: **OnPremWGGateway-PI1**
 
     -  Enable active-active mode: **Enabled**
 
-    -  Second Public IP address name: **onpremgatewayIP2**
+    -  Second Public IP address name: **OnPremWGGateway-PI2**
 
     -  Configure BGP: **Disabled**
 
 3.  Validate your settings and select **Review + Create** then **Create**.
 
-    >**Note:** The gateway will take 30-45 minutes to provision. Rather than waiting, continue to the next task.
+    >**Note:** The gateway will take 20-30 minutes to provision. Rather than waiting, continue to the next task.
 
 1.  Using the Azure Management portal, select **+ Create a resource**, type **Virtual Network gateway** in the **Search the Marketplace** text box, in the list of results, select **Virtual network gateway**, and then select **Create**.
 
@@ -742,11 +742,11 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Public IP address: **Create new**
 
-    -  Public IP address name: **vnet1gatewayIP1**
+    -  Public IP address name: **WGVNet1Gateway-PI1**
 
     -  Enable active-active mode: **Enabled**
 
-    -  Second Public IP address name: **vnet1gatewayIP2**
+    -  Second Public IP address name: **WGVNet1Gateway-PI2**
 
     -  Configure BGP: **Disabled**
 
