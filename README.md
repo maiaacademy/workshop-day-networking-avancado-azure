@@ -192,7 +192,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     > **Note:** You can deploy the template by selecting the 'Deploy to Azure' button below. You will need to create a new resource group **WGVNetRG2***. You will also need to select a location **East US or location you hava quotas for VMs**. Then choose **Review + create** followed by **Create**. 
 
-    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fopenhackpublic.blob.core.windows.net%2Flob-migration%2Fsept-2021%2FSmartHotelFull.json" target="_blank">![Button to deploy the Woodgrove template to Azure.](/AllFiles/Images/deploy-to-azure.png)</a>
+    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmaiaacademy%2Fworkshop-day-networking-avancado-azure%2Fmain%2FAllFiles%2Fwoodgrove.json" target="_blank">![Button to deploy the Woodgrove template to Azure.](/AllFiles/Images/deploy-to-azure.png)</a>
 
     > **Note:** The template will take around 15 minutes to deploy. Once template deployment is complete, several additional scripts are executed to bootstrap the lab environment. **Allow at least 30 minutes from the start of template deployment for the scripts to run.**
 
