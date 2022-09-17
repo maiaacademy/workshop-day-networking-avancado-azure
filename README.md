@@ -494,7 +494,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Route name: **AppToMgmt**
 
-    -  Address prefix: **10.7.0.8/29**
+    -  Address prefix: **10.7.0.0/20**
 
     -  Next hop type: **Virtual appliance**
 
@@ -530,7 +530,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     -  Virtual network: **WGVNet1**
 
-    -  Public IP address: **(Add new) AzureFirewall-ip**
+    -  Public IP address: **(Add new) AzureFirewall-PI**
 
 3.  Select **Review + create** and then select **Create** to provision the Azure Firewall. 
 
@@ -540,9 +540,9 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 2.  Select the **WGVNetRG1** resource group. This resource group contains the azure firewall and its public IP address resources.
 
-3.  Navigate to the **azureFirewall-ip** blade and note the value of its public IP address. You will need it later in this task.
+3.  Navigate to the **AzureFirewall-PI** blade and note the value of its public IP address. You will need it later in this task.
 
-4.  Navigate to the **azureFirewall** blade, and, on the **Overview** page, select **Rules** under **Settings** on the left.
+4.  Navigate to the **AzureFirewall** blade, and, on the **Overview** page, select **Azure Firewall Policy** and **Rules** under **Settings** on the left.
 
 5.  Select **+ Add NAT Rule collection** and enter the following information to create an inbound NAT Rule (collection is a list of rules that share the same priority and action) then select **Add**:
 
