@@ -114,15 +114,15 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
     | --- | --- |
     | Subscription | the name of the Azure subscription you are using in this lab |
     | Resource Group | **WGVNetRG1** |
-    | Name | **arquitetocloud.corp** |
+    | Name | **woodgrove.corp** |
 
 1. Click Review and Create. Let validation occur, and hit Create again to submit your deployment.
 
     >**Note**: Wait for the private DNS zone to be created. This should take about 2 minutes.
 
-1. Click **Go to resource** to open the **arquitetocloud.corp** DNS private zone blade.
+1. Click **Go to resource** to open the **woodgrove.corp** DNS private zone blade.
 
-1. On the **arquitetocloud.corp** private DNS zone blade, in the **Settings** section, click **Virtual network links**
+1. On the **woodgrove.corp** private DNS zone blade, in the **Settings** section, click **Virtual network links**
 
 1. Click **+ Add** to create a virtual network link with the following settings (leave others with their default values):
 
@@ -137,7 +137,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
     >**Note:** Wait for the virtual network link to be created. This should take less than 1 minute.
 
-1. On the **arquitetocloud.corp** private DNS zone blade, in the sidebar, click **Overview**
+1. On the **woodgrove.corp** private DNS zone blade, in the sidebar, click **Overview**
 
 1. Verify that the DNS records for **WGVM1** appear in the list of record sets as **Auto registered**.
 
@@ -148,7 +148,7 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 1. In the Terminal console, run the following to test internal name resolution of the **WGVM1** DNS record set in the newly created private DNS zone:
 
    ```shell
-   nslookup WGVM1.arquitetocloud.corp
+   nslookup WGVM1.woodgrove.corp
    ```
 
 1. Verify that the output of the command includes the private IP address of **WGVM1**.
