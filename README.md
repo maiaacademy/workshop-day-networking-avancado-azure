@@ -438,6 +438,8 @@ Para realizar as atividades do Hands-on Lab estamos utilizando o Portal do Azure
 
 3.  On the **Create a Bastion** blade, on the **Review + Create** tab, ensure the validation passes, and select **Create**. The Bastion host will take about 15 minutes to provision.
 
+5.  In the Azure portal, navigate to the Network Security groups, navegate on the **WGAppNSG1**, select **Inbound security rules** under **Settings** on the left and select **Add** rules allow RDP/SSH for source **Virtual Network** on TAG and destionation **WebTier and DataTier** on Application Security groups.
+
 1. In the Azure portal, navigate to the **WGWEB1** VM and initiate a Bastion connection session to the WGWEB1 virtual machine by selecting Connect and Bastion, enter the following information:
 
  - User name: demouser
