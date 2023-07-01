@@ -3,95 +3,100 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vmstorageType": {
-      "defaultValue": "Standard_LRS",
+      "type": "string",
+      "defaultValue": "Premium_LRS",
       "allowedValues": [
-        "Standard_LRS"
-      ],
-      "type": "String"
+        "Premium_LRS"
+      ]
     },
     "adminUsername": {
+      "type": "string",
       "defaultValue": "demouser",
-      "type": "String",
       "metadata": {
         "description": "The name of the administrator account of the new VM"
       }
     },
     "adminPassword": {
+      "type": "securestring",
       "defaultValue": "demo@pass123",
-      "type": "SecureString",
       "metadata": {
         "description": "The password for the administrator account of the new VM and domain"
       }
     },
     "CloudShopDownloadUrl": {
-      "defaultValue": "https://cloudworkshop.blob.core.windows.net/enterprise-networking/Cloudshop.zip",
-      "type": "String",
+      "type": "string",
       "metadata": {
         "description": "Zip that contains cloud shop sample"
-      }
+      },
+      "defaultValue": "https://cloudworkshop.blob.core.windows.net/enterprise-networking/Cloudshop.zip"
     },
     "CloudShopDBDownloadUrl": {
-      "defaultValue": "https://cloudworkshop.blob.core.windows.net/shared/AdventureWorks2012.bak",
-      "type": "String",
+      "type": "string",
       "metadata": {
         "description": "Zip that contains Adventure works DB sample"
-      }
+      },
+      "defaultValue": "https://cloudworkshop.blob.core.windows.net/shared/AdventureWorks2012.bak"
     },
     "CloudShopInstallscriptUrl": {
-      "defaultValue": "https://cloudworkshop.blob.core.windows.net/enterprise-networking/deploy-cloudshop.ps1",
-      "type": "String",
+      "type": "string",
       "metadata": {
         "description": "script to execute"
-      }
+      },
+      "defaultValue": "https://cloudworkshop.blob.core.windows.net/enterprise-networking/deploy-cloudshop.ps1"
     },
     "CloudShopDBInstallscriptUrl": {
-      "defaultValue": "https://cloudworkshop.blob.core.windows.net/enterprise-networking/deploy-cloudshop-db.ps1",
-      "type": "String",
+      "type": "string",
       "metadata": {
         "description": "script to execute"
-      }
+      },
+      "defaultValue": "https://cloudworkshop.blob.core.windows.net/enterprise-networking/deploy-cloudshop-db.ps1"
     },
     "SQLConfigscriptUrl": {
-      "defaultValue": "https://cloudworkshop.blob.core.windows.net/enterprise-networking/configure-sql.ps1",
-      "type": "String",
+      "type": "string",
       "metadata": {
         "description": "script to execute"
-      }
+      },
+      "defaultValue": "https://raw.githubusercontent.com/Microsoft/MCW-Enterprise-class-networking/main/Hands-on%20lab/labfiles/configure-sql.ps1"
     },
     "WebVMName": {
+      "type": "string",
       "defaultValue": "WGWEB1",
-      "minLength": 1,
-      "type": "String"
+      "minLength": 1
+    },
+    "WebVMName2": {
+      "type": "string",
+      "defaultValue": "WGWEB2",
+      "minLength": 1
     },
     "SQLVMName": {
+      "type": "string",
       "defaultValue": "WGSQL1",
-      "minLength": 1,
-      "type": "String"
+      "minLength": 1
     },
     "existingVirtualNetworkName": {
+      "type": "string",
       "defaultValue": "WGVNet2",
-      "type": "String",
       "metadata": {
         "description": "Name of the existing VNET"
       }
     },
     "existingVirtualNetworkResourceGroup": {
+      "type": "string",
       "defaultValue": "WGVNetRG2",
-      "type": "String",
       "metadata": {
         "description": "Name of the existing VNET resource group"
       }
     },
     "WebSubnet": {
+      "type": "string",
       "defaultValue": "AppSubnet",
-      "type": "String",
       "metadata": {
         "description": "Name of the Web Tier subnet"
       }
     },
     "DataSubnet": {
+      "type": "string",
       "defaultValue": "DataSubnet",
-      "type": "String",
       "metadata": {
         "description": "Name of the Data Tier subnet"
       }
@@ -106,13 +111,14 @@
     "CloudShopDBInstallScriptFileName": "deploy-cloudshop-db.ps1",
     "CloudShopDBInstallScriptParameters": "[concat(' -user ', parameters('adminUsername'), ' -password ', parameters('adminPassword'), ' -dbsource ', parameters('CloudShopDBDownloadUrl'), ' -sqlConfigUrl ', parameters('SQLConfigscriptUrl'))]",
     "vmstorageName": "[concat('chqdisks', uniqueString(resourceGroup().id))]",
-    "WindowsOSVersion": "2016-Datacenter",
+    "WindowsOSVersion": "2019-Datacenter",
     "WindowsImagePublisher": "MicrosoftWindowsServer",
     "WindowsImageOffer": "WindowsServer",
     "SQLSKU": "Web",
     "SQLImagePublisher": "MicrosoftSQLServer",
-    "SQLImageOffer": "SQL2014SP2-WS2012R2",
+    "SQLImageOffer": "sql2019-ws2019",
     "WebOSDiskName": "WebOSDisk",
+    "WebVM-2OSDiskName": "WebOSDisk2",
     "WebVmSize": "Standard_D2S_v3",
     "WebSubnetRef": "[concat(variables('VnetID'), '/subnets/', variables('VNETSubnet1Name'))]",
     "WebStorageAccountContainerName": "vhds",
@@ -125,46 +131,48 @@
     "scriptFolder": ".",
     "WebIPName": "webip",
     "AVSetName": "WebAVSet",
+    "WebVM-2StorageAccountContainerName": "vhds",
+    "WebVM-2NicName": "[concat(parameters('WebVMName2'), 'NetworkInterface')]",
     "apiVersionCompute": "2018-10-01",
     "apiVersionExtensions": "2018-06-01",
     "apiVersionNetwork": "2018-10-01",
     "apiVersionStorage": "2018-07-01"
   },
   "resources": [
-    {
+  {
       "type": "Microsoft.Compute/availabilitySets",
-      "apiVersion": "[variables('apiVersionCompute')]",
       "name": "[variables('AVSetName')]",
+      "apiVersion": "[variables('apiVersionCompute')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "WebAVSet"
       },
-      "sku": {
-        "name": "classic"
-      },
       "properties": {
         "platformFaultDomainCount": "2",
         "platformUpdateDomainCount": "2"
+      },
+      "sku": {
+        "name": "classic"
       }
     },
     {
+      "name": "[variables('vmstorageName')]",
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "[variables('apiVersionStorage')]",
-      "name": "[variables('vmstorageName')]",
       "location": "[resourceGroup().location]",
-      "dependsOn": [],
-      "tags": {
-        "displayName": "CloudShopStorage"
-      },
       "sku": {
         "name": "[parameters('vmstorageType')]"
       },
+      "tags": {
+        "displayName": "CloudShopStorage"
+      },
+      "dependsOn": [],
       "kind": "Storage"
     },
     {
+      "name": "[variables('WebNicName')]",
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "[variables('apiVersionNetwork')]",
-      "name": "[variables('WebNicName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses', variables('WebIPName'))]"
@@ -190,9 +198,9 @@
       }
     },
     {
+      "name": "[parameters('WebVMName')]",
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "name": "[parameters('WebVMName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('vmstorageName'))]",
@@ -240,9 +248,9 @@
       },
       "resources": [
         {
+          "name": "InstallCloudShop",
           "type": "extensions",
           "apiVersion": "[variables('apiVersionExtensions')]",
-          "name": "InstallCloudShop",
           "location": "[resourceGroup().location]",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', parameters('WebVMName'))]"
@@ -266,11 +274,12 @@
       ]
     },
     {
+      "name": "[variables('SQLNicName')]",
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "[variables('apiVersionNetwork')]",
-      "name": "[variables('SQLNicName')]",
       "location": "[resourceGroup().location]",
-      "dependsOn": [],
+      "dependsOn": [
+       ],
       "tags": {
         "displayName": "SQLNic"
       },
@@ -289,9 +298,9 @@
       }
     },
     {
+      "name": "[parameters('SQLVMName')]",
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "name": "[parameters('SQLVMName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('vmstorageName'))]",
@@ -335,10 +344,10 @@
       },
       "resources": [
         {
-          "type": "extensions",
-          "apiVersion": "[variables('apiVersionExtensions')]",
           "name": "InstallCloudShopDB",
+          "type": "extensions",
           "location": "[resourceGroup().location]",
+          "apiVersion": "[variables('apiVersionExtensions')]",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', parameters('SQLVMName'))]"
           ],
@@ -361,9 +370,9 @@
       ]
     },
     {
+      "name": "[variables('WebIPName')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "[variables('apiVersionNetwork')]",
-      "name": "[variables('WebIPName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [],
       "tags": {
@@ -372,6 +381,105 @@
       "properties": {
         "publicIPAllocationMethod": "Dynamic"
       }
+    },
+    {
+      "name": "[variables('WebVM-2NicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "[variables('apiVersionNetwork')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "WebVM-2Nic"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('WebSubnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[parameters('WebVMName2')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "[variables('apiVersionCompute')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('vmstorageName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('WebVM-2NicName'))]"
+      ],
+      "tags": {
+        "displayName": "WGWEB2"
+      },
+      "properties": {
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('AVSetName'))]"
+        },
+        "hardwareProfile": {
+          "vmSize": "[variables('WebVmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[parameters('WebVMName2')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('WindowsImagePublisher')]",
+            "offer": "[variables('WindowsImageOffer')]",
+            "sku": "[variables('WindowsOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "WebVM-2OSDisk",
+            "vhd": {
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', variables('vmstorageName')), '2017-06-01').primaryEndpoints.blob, variables('WebVM-2StorageAccountContainerName'), '/', variables('WebVM-2OSDiskName'), '.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('WebVM-2NicName'))]"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "name": "InstallCloudShop",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "[variables('apiVersionExtensions')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Compute/virtualMachines', parameters('WebVMName2'))]"
+          ],
+          "tags": {
+            "displayName": "InstallCloudShop"
+          },
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "CustomScriptExtension",
+            "typeHandlerVersion": "1.9",
+            "autoUpgradeMinorVersion": false,
+            "settings": {
+              "fileUris": [
+                "[concat(parameters('CloudShopInstallscriptUrl'))]"
+              ],
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('scriptFolder'), '/', variables('CloudShopInstallScriptFileName'), ' ', variables('CloudShopInstallScriptParameters'))]"
+            }
+          }
+        }
+      ]
     }
   ],
   "outputs": {}
